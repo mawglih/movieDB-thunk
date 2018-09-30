@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import  { connect } from 'react-redux';
 import {
-  searchMoviesStart,
+  searchMovies,
 } from 'actions';
 import './Search.css';
 
@@ -20,7 +20,7 @@ class Search extends Component {
   };
   onFormSubmit = (event) => {
     event.preventDefault();
-    this.props.searchMoviesStart(this.state.term);
+    this.props.searchMovies(this.state.term);
     this.setState({
       term: '',
     });
@@ -55,4 +55,4 @@ class Search extends Component {
     );
   }
 }
-export default connect(null, { searchMoviesStart })(Search);
+export default connect(null, { searchMovies })(Search);

@@ -17,7 +17,7 @@ class MovieItem extends Component {
     getMovieInfo(this.props.match.params.id)
     .then(response => {
       this.setState({
-        data: response.data,
+        data: response,
       });
     })
     
@@ -25,43 +25,50 @@ class MovieItem extends Component {
   render() {
     console.log('movie info: ', this.state.data);
     const {
-      original_title,
-      poster_path,
-      overview,
-      tagline,
-      release_date,
-    } = this.state.data;
+      data
+    } = this.state;
+    
     return (
-      <div className="movieSingle">
-        <h2>
-          <span>
-            {original_title}
-          </span>
-        </h2>
-        <h3>
-          {release_date ? 
-            (<span>
-            ({release_date.split('-')[0]})
-          </span>) : null
-          }
-        </h3>
-        <h4>{tagline}</h4>
-        {poster_path ? 
-          (<div>
-            <img src={`${IMAGE_URL}${poster_path}`} alt={original_title}/>
-          </div>) : null
-        }
-        <div className="overview">
-          <p>{overview}</p>
-        </div>
-        <div>
-          <Link to='/'>
-            {'Go back'}
-          </Link>
-        </div>
-      </div>
+      <Movie {...data} />
     );
   }
 }
 
 export default MovieItem;
+
+const Movie = ({
+  original_title,
+  poster_path,
+  overview,
+  tagline,
+  release_date,
+}) => (
+  <div className="movieSingle">
+    <h2>
+      <span>
+        {original_title}
+      </span>
+    </h2>
+    <h3>
+      {release_date && original_title &&
+        (<span>
+        ({release_date.split('-')[0]})
+      </span>)
+      }
+    </h3>
+    <h4>{tagline}</h4>
+    {poster_path &&
+      <div>
+        <img src={`${IMAGE_URL}${poster_path}`} alt={original_title}/>
+      </div>
+    }
+    <div className="overview">
+      <p>{overview}</p>
+    </div>
+    <div>
+      <Link to='/'>
+        {'Go back'}
+      </Link>
+    </div>
+  </div>
+);

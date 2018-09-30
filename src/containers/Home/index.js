@@ -5,7 +5,14 @@ import {
 } from 'actions';
 import Search from 'containers/Search';
 import MovieList from 'components/MovieList';
+import {
+  displayMovies,
+} from 'utility';
+import Button from 'components/Button';
+import FilterByName from 'components/FilterByName';
 import './Home.css';
+
+
 
 class Home extends Component {
   constructor(props) {
@@ -16,13 +23,13 @@ class Home extends Component {
     };
   }
   handleClick(number) {
-    console.log('page value: ', number);
     this.setState({
       currentPage: Number(number)
     });
   }
+
   componentDidMount() {
-    fetchMoviesStart()
+    fetchMoviesStart();
   }
 
   render() {
@@ -33,12 +40,11 @@ class Home extends Component {
       currentPage,
       itemsPerPage,
     } = this.state;
+    
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = Object.values(movies).slice(indexOfFirstItem, indexOfLastItem);
-    //
     const pageNumbers = Array.from(new Array(4),(val,index)=>index+1);
-    console.log("Total page Numbers: ", pageNumbers.length);
     const renderPageNumbers = pageNumbers.map(number => {
       return (
         <div
@@ -51,12 +57,34 @@ class Home extends Component {
         </div>
       );
     });
-    console.log('Home movies: ', movies);
-    console.log('Current page: ', currentPage);
+    // console.log('Home movies: ', movies);
+    // console.log('Current page: ', currentPage);
     return(
       <div className="main">
         <div className="search">
           <Search />
+        </div>
+        <div className="filters">
+          <FilterByName
+            placeholder={'Filter by name of the movie'}
+            value={'title'}
+          />
+          <div className="buttons">
+            <Button
+              movies={movies}
+              text={'A-Z'}
+              buttonClass={'small'}
+            />
+            <Button
+              movies={movies}
+              text={'Z-A'}
+              buttonClass={'small'}
+            />
+          </div>
+          <FilterByName
+            placeholder={'Filter by year of the movie'}
+            value={'year'}
+          />
         </div>
         <div className="movieList">
           <MovieList
@@ -73,8 +101,11 @@ class Home extends Component {
 
 const mapStateToProps = state => (
  {
-    movies: state.movies,
+    movies: displayMovies (state.movies, state.filters),
   }
 );
 
-export default connect(mapStateToProps, { fetchMoviesStart })(Home);
+export default connect(
+  mapStateToProps, {
+    fetchMoviesStart,
+  })(Home);

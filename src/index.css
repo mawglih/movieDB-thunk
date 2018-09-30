@@ -4,3 +4,9 @@ body {
   font-family: sans-serif;
   box-sizing: border-box;
 }
+#root > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}

@@ -2,7 +2,8 @@ import {
   FETCH_MOVIES_SUCCESS,
   SEARCH_MOVIES_SUCCESS,
 } from '../actionTypes';
-const INITIAL_STATE = {};
+
+const INITIAL_STATE = [];
 
 const MoviesReducer = (state = INITIAL_STATE, {type, payload}) => {
   switch(type) {

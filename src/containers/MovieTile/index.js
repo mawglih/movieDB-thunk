@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getMovieStart } from 'actions';
 import { getMovieInfo } from 'api';
 import { Link } from 'react-router-dom';
 import './MovieTile.css';
 
 class MovieTile extends Component {
   handleClick = (id) => {
-    console.log('The id is: ', id);
     getMovieInfo(id);
   }
   render() {
@@ -45,4 +42,4 @@ class MovieTile extends Component {
   }
 }
 
-export default connect(null, { getMovieStart })(MovieTile);
+export default MovieTile;

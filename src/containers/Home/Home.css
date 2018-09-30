@@ -19,8 +19,16 @@
   margin-bottom: 1rem;
 }
 .paginationItem {
-  border: 1px solid black;
+  border: 1px solid green;
+  color: green;
+  font-weight: bolder;
   padding: 5px 10px;
   margin-right: 2px;
   cursor: pointer;
+}
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
 }
